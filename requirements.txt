@@ -1,1 +1,6 @@
 DVC
+numpy 
+pandas
+matplotlib
+seaborne
+scikit-learn
