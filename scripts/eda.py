@@ -44,10 +44,13 @@ class EDA:
         logging.info(f"Number of duplicate rows: {duplicates}")
         return {"info": info, "shape": shape, "duplicates": duplicates}
 
-    def summary_statistics(self):
+    def summary_statistics(self, data = None):
         """
         Generate summary statistics.
         """
+        if data is not None:
+            self.data = data
+
         logging.info("Summary Statistics:")
         stats = self.data.describe(include="all").transpose()
         logging.info(stats)
