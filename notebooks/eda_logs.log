@@ -1,0 +1,18 @@
+2025-02-07 21:10:14,631 - INFO - Successfully loaded Fraud_Data.csv
+2025-02-07 21:10:25,885 - INFO - Successfully loaded Fraud_Data.csv
+2025-02-07 21:12:19,163 - ERROR - Error loading Fraud_Data.csv: [Errno 2] No such file or directory: 'data/raw/Fraud_Data.csv'
+2025-02-07 21:12:49,462 - ERROR - Error loading Fraud_Data.csv: [Errno 2] No such file or directory: 'data/raw/Fraud_Data.csv'
+2025-02-07 21:12:58,202 - ERROR - Error loading Fraud_Data.csv: [Errno 2] No such file or directory: 'data/raw/Fraud_Data.csv'
+2025-02-07 21:14:08,251 - ERROR - Error loading Fraud_Data.csv: [Errno 2] No such file or directory: 'data/raw/Fraud_Data.csv'
+2025-02-07 21:14:15,813 - INFO - Successfully loaded Fraud_Data.csv
+2025-02-07 21:14:15,813 - INFO - Generating summary for Fraud_Data.csv
+2025-02-07 21:14:16,003 - INFO - Fraud_Data.csv contains 0 duplicate rows.
+2025-02-07 21:14:16,007 - INFO - Outliers detected in purchase_value using iqr method: 1067
+2025-02-07 21:17:32,789 - INFO - Successfully loaded Fraud_Data.csv
+2025-02-07 21:17:32,795 - INFO - Generating summary for Fraud_Data.csv
+2025-02-07 21:17:32,985 - INFO - Fraud_Data.csv contains 0 duplicate rows.
+2025-02-07 21:17:32,989 - INFO - Outliers detected in purchase_value using iqr method: 1067
+2025-02-07 21:17:43,946 - INFO - Successfully loaded Fraud_Data.csv
+2025-02-07 21:17:43,951 - INFO - Generating summary for Fraud_Data.csv
+2025-02-07 21:17:44,143 - INFO - Fraud_Data.csv contains 0 duplicate rows.
+2025-02-07 21:17:44,146 - INFO - Outliers detected in purchase_value using iqr method: 1067
