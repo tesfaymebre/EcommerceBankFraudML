@@ -1,6 +1,6 @@
 import pandas as pd
 import logging
-
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -63,4 +63,68 @@ class FeatureEngineer:
 
         except Exception as e:
             logging.error(f"Error creating transaction features: {e}")
+            return data
+
+
+    @staticmethod
+    def create_high_risk_country_flag(data, country_column, high_risk_countries):
+        """
+        Creates a binary flag for transactions from high-risk fraud countries.
+
+        Parameters:
+        ----------
+        data : pd.DataFrame
+            The dataset containing country information.
+        country_column : str
+            The column representing the country.
+
+        Returns:
+        --------
+        pd.DataFrame
+            Dataset with a new column 'high_risk_country' (1 = high risk, 0 = low risk).
+        """
+        try:
+
+            # Create a binary flag for high-risk countries
+            data['high_risk_country'] = data[country_column].apply(lambda x: 1 if x in high_risk_countries else 0)
+
+            logging.info(f"Created 'high_risk_country' feature using {len(high_risk_countries)} high-fraud countries.")
+            return data
+
+        except Exception as e:
+            logging.error(f"Error creating high-risk country flag: {e}")
+            return data
+
+    @staticmethod
+    def normalize_numerical_features(data, columns):
+        """
+        Normalizes numerical features using Min-Max Scaling.
+        """
+        try:
+            scaler = MinMaxScaler()
+            data[columns] = scaler.fit_transform(data[columns])
+            logging.info(f"Normalized columns: {columns}.")
+            return data
+        except Exception as e:
+            logging.error(f"Error normalizing numerical features: {e}")
+            return data
+
+    @staticmethod
+    def encode_categorical_features(data, categorical_columns):
+        """
+        Encodes categorical features using One-Hot Encoding.
+        """
+        try:
+            encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+            encoded_df = pd.DataFrame(encoder.fit_transform(data[categorical_columns]))
+            encoded_df.columns = encoder.get_feature_names_out(categorical_columns)
+
+            # Drop original categorical columns and add encoded ones
+            data = data.drop(columns=categorical_columns).reset_index(drop=True)
+            data = pd.concat([data, encoded_df], axis=1)
+
+            logging.info(f"Encoded categorical features: {categorical_columns}.")
+            return data
+        except Exception as e:
+            logging.error(f"Error encoding categorical features: {e}")
             return data

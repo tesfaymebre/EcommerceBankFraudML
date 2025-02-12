@@ -1,6 +1,10 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 class DataVisualizer:
@@ -257,9 +261,50 @@ class DataVisualizer:
         top_users = data.groupby(user_id_column)[transaction_column].max().nlargest(top_n)
         
         plt.figure(figsize=(12, 5))
-        sns.barplot(x=top_users.index, y=top_users.values, palette='coolwarm')
+        sns.barplot(x=top_users.index, hue= top_users.index, y=top_users.values, palette='coolwarm')
         plt.xticks(rotation=45)
         plt.title(f'Top {top_n} Users with Highest Transaction Counts')
         plt.xlabel(user_id_column)
         plt.ylabel(transaction_column)
         plt.show()
+
+
+    @staticmethod
+    def plot_fraud_rate_by_country(data, country_column='country', class_column='class', top_n=10):
+        """
+        Plots the fraud rate per country.
+
+        Parameters:
+        ----------
+        data : pd.DataFrame
+            The dataset containing country and fraud class data.
+        country_column : str
+            The column representing the country.
+        class_column : str
+            The column representing the fraud class (0 = Non-Fraud, 1 = Fraud).
+        top_n : int
+            Number of top fraudulent countries to display.
+        """
+        try:
+            # Calculate fraud rate per country
+            fraud_counts = data.groupby(country_column)[class_column].sum()
+            total_counts = data[country_column].value_counts()
+            fraud_rate = (fraud_counts / total_counts).fillna(0) * 100  # Convert to percentage
+
+            # Select top N fraudulent countries
+            top_fraud_countries = fraud_rate.nlargest(top_n)
+            
+            # Plot fraud rate by country
+            plt.figure(figsize=(12, 6))
+            sns.barplot(x=top_fraud_countries.index, hue= top_fraud_countries.index, y=top_fraud_countries.values, palette='Reds_r')
+            plt.xticks(rotation=45)
+            plt.title(f'Top {top_n} Countries by Fraud Rate')
+            plt.xlabel('Country')
+            plt.ylabel('Fraud Rate (%)')
+            plt.show()
+
+            logging.info(f"Plotted fraud rate for top {top_n} fraudulent countries.")
+
+        except Exception as e:
+            logging.error(f"Error in plotting fraud rate by country: {e}")
+
